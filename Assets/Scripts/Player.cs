@@ -10,12 +10,15 @@ public class Player : MonoBehaviour
     public float speed = 10f;
     public Image scareImage;
     public Button playAgainButton;
+    private AudioSource src;
+    public AudioClip scary;
 
     private void Start()
     {
         Cursor.visible = false;
         scareImage.gameObject.SetActive(false);
         playAgainButton.gameObject.SetActive(false);
+        src = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,13 +41,14 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.CompareTag("Scare"))
         {
             ShowScareImage();
+            src.PlayOneShot(scary);
         }
     }
 
     private void ShowScareImage()
     {
         scareImage.gameObject.SetActive(true);
-        Destroy(gameObject);
+        speed = 0;
     }
 
     private void ShowPlayAgainButton()
